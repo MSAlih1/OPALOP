@@ -3,7 +3,7 @@
 
 system is using ASP.NET web server and WebMethod.
 
-system can be clustered,so the processing time is shortened with cluster WebMethod servers.
+system can be clustered,so the processing time shortened with cluster WebMethod servers.
 
 Project Server "http://proje.azurewebsites.net/".
 
