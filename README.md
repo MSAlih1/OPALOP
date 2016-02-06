@@ -6,7 +6,9 @@ system is using ASP.NET web server and WebMethod.
 system can be clustered,so the processing time shortened with cluster WebMethod servers.
 
 Project Server "http://proje.azurewebsites.net/".
-Router API Server "http://qprapi.azurewebsites.net/"
+
+Router API Server "http://qprapi.azurewebsites.net/".
+
 WebMethod Servers "http://qpp[1-8].azurewebsites.net" (clustered servers).
 
 about 4095 mini picture in lagest photo.
