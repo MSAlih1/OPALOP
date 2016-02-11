@@ -13,6 +13,9 @@ WebMethod Servers "http://qpp[1-8].azurewebsites.net" (clustered servers).
 
 about 4095 mini picture in lagest photo.
 
+-incomplete picure
+![OnePhotoALofOfPictures](https://raw.githubusercontent.com/MSAlih1/OPALOP-Picture-Mosaic/master/20x20_test.jpg)
+
 -4095 count mini picture in
 ![OnePhotoALofOfPictures](https://raw.githubusercontent.com/MSAlih1/OPALOP/master/game-of-thornes-opalop.jpg)
 
