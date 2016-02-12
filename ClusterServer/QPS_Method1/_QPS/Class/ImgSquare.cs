@@ -1,15 +1,16 @@
 ﻿using QPS_Web1._CSHARP.Class;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Web;
 
 namespace QPS_Web1._QPS.Class
 {
     public class ImgSquare
     {
         public bool isArea = false;
-
         public int IAvgRgb { get; set; }
-
         private Image myVar;
 
         public Image IImage
@@ -71,15 +72,10 @@ namespace QPS_Web1._QPS.Class
         //}
 
         private string hexname = "";
-
         public int SAvgArb { get; set; }
-
         public int W { get; set; }
-
         public int H { get; set; }
-
         public int Brightness { get { return this.QuardAvg[QuardAvg.Count - 1].Brightness; } }
-
         public List<QuardPixAvg> QuardAvg { get; set; }
 
         public ImgSquare(int _w, int _h, List<QuardPixAvg> lquard)

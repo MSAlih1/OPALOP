@@ -6,6 +6,7 @@ using QPS_Web1._CSHARP.Class;
 using QPS_Web1._QPS.Type;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -272,13 +273,18 @@ namespace QPS_Web1._QPS.Class
                             string filname = Path.GetFileName(imglist[i]);
                             if (potos.FindIndex(p => Path.GetFileName(p.Value) == filname) == -1)
                             {
+                                Bitmap btm = InstagramProfile.DownloadImage(imglist[i]);
+                                if (btm == null)
+                                    continue;
+
                                 XElement photo = new XElement("Photos",
                                     new XAttribute("useThis", true.ToString())
                                     );
                                 photo.Value = imglist[i];
                                 InstagramP.Add(photo);
 
-                                using (MagickImage mini = new MagickImage(InstagramProfile.DownloadImage(imglist[i])))
+                                
+                                using (MagickImage mini = new MagickImage(btm))
                                 {
                                     mini.Quality = 100;
                                     mini.Resize(94, 94);

@@ -1,7 +1,12 @@
-﻿using System;
+﻿using ImageMagick;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace Muuzy.Class
 {
@@ -15,15 +20,11 @@ namespace Muuzy.Class
         _64x64 = 64,
         _94x94 = 94
     }
-
     public class ImgSquare
     {
         public bool isArea = false;
-
         public int IAvgRgb { get; set; }
-
         private Image myVar;
-
         public Image IImage
         {
             get { return myVar; }
@@ -39,7 +40,6 @@ namespace Muuzy.Class
             IAvgRgb = ImageProperty.HexToInt(hex);
             isArea = false;
         }
-
         public int GeneratedColorCode
         {
             get
@@ -70,6 +70,7 @@ namespace Muuzy.Class
         //baskın olan 2 Renk renk tonunu belirtiyor 3. renk de parlaklığı belirtiyor
         //2 Renk birbirine eşitse 3. renk ana rengi diğer 2 renkde parlaklığı belirtir
 
+
         //public int ComparePixColor(Color miniClr)
         //{
         //    Color a = Color.FromArgb(this.QuardAvg[QuardAvg.Count - 1].QAvgAbs);
@@ -83,17 +84,11 @@ namespace Muuzy.Class
         //}
 
         private string hexname = "";
-
         public int SAvgArb { get; set; }
-
         public int W { get; set; }
-
         public int H { get; set; }
-
         public int Brightness { get { return this.QuardAvg[QuardAvg.Count - 1].Brightness; } }
-
         public List<QuardPixAvg> QuardAvg { get; set; }
-
         public ImgSquare(int _w, int _h, List<QuardPixAvg> lquard)
         {
             W = _w;
@@ -115,7 +110,6 @@ namespace Muuzy.Class
             QuardAvg = lquard;
             isArea = true;
         }
-
         public override string ToString()
         {
             return W + "x" + H;
@@ -128,7 +122,6 @@ namespace Muuzy.Class
                 return IAvgRgb.ToString();
             }
         }
-
         ~ImgSquare()
         {
             hexname = "";
@@ -141,21 +134,16 @@ namespace Muuzy.Class
             IAvgRgb = 0;
         }
     }
-
     public class QuardPixAvg
     {
         public QuardPixAvg()
         {
+
         }
-
         public QuardBolum Bolum { get; set; }
-
         public int QuardAvg { get; set; }
-
         public int QAvgAbs { get { return Math.Abs(QuardAvg); } }
-
         public int Brightness { get { return ImageProperty.BrightnessPercent(this.QuardAvg); } }
-
         public QuardPixAvg(Color cl, QuardBolum blm)
         {
             QuardAvg = cl.ToArgb();
@@ -166,7 +154,6 @@ namespace Muuzy.Class
         {
             return QuardAvg.ToString();
         }
-
         ~QuardPixAvg()
         {
             Bolum = new QuardBolum();
@@ -185,6 +172,7 @@ namespace Muuzy.Class
 
     public class ColorMatrix
     {
+
         #region Constructor
 
         /// <summary>
@@ -194,7 +182,7 @@ namespace Muuzy.Class
         {
         }
 
-        #endregion Constructor
+        #endregion
 
         #region Properties
 
@@ -203,7 +191,7 @@ namespace Muuzy.Class
         /// </summary>
         public float[][] Matrix { get; set; }
 
-        #endregion Properties
+        #endregion
 
         #region Public Functions
 
@@ -231,6 +219,7 @@ namespace Muuzy.Class
             return NewBitmap;
         }
 
-        #endregion Public Functions
+        #endregion
     }
+
 }

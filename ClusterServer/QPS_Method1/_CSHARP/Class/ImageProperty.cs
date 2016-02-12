@@ -13,6 +13,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Web;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace QPS_Web1._CSHARP.Class
@@ -31,7 +33,6 @@ namespace QPS_Web1._CSHARP.Class
         }
 
         public static float[] angle = new float[] { 90, 180, 270, 360 };
-
         public static string JPG { get { return ".jpg"; } }
 
         #region rotate image

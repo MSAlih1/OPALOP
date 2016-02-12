@@ -2,6 +2,7 @@
 using Instagram.api.classes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using QPS_Web1._CSHARP.Class;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -109,8 +110,17 @@ namespace QPS_Web1._QPS.Class
             try
             {
                 WebClient client = new WebClient();
-                Stream stream = client.OpenRead(_imageUrl);
-                Bitmap bitmap = new Bitmap(stream);
+                Bitmap bitmap = null;
+                Stream stream = null;
+                try
+                {
+                    stream = client.OpenRead(_imageUrl);
+                    bitmap = new Bitmap(stream);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
                 stream.Flush();
                 stream.Close();
                 stream = null;

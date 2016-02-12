@@ -1,9 +1,14 @@
-﻿using Api._QPR.abstracts;
+﻿using Api;
+using Api._QPR;
+using Api._QPR.abstracts;
 using Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Web;
 using System.Xml.Linq;
 
 namespace Muuzy.Class
@@ -35,7 +40,7 @@ namespace Muuzy.Class
             get { return "black.jpg"; }
         }
 
-        public static int ComputerNumber { get { return 8; } }
+        public static int ComputerNumber { get { return 1; } }
 
         public static string Current_User
         { get { return Path.Combine(Startup_Path, UserName); } }
@@ -81,11 +86,11 @@ namespace Muuzy.Class
         public static string SavedPhotos_Path
         { get { return Path.Combine(Data_Path, "SavedPhotos"); } }
 
-        //public static string ServerIP
-        //{
-        //    get
-        //    { return "api.[HOSTNAME].com"; }
-        //}
+        public static string ServerIP
+        {
+            get
+            { return "api.qpiro.com"; }
+        }
         public static string UserName
         { get { return ImageProperty.GetUserName(); } }
 
@@ -93,7 +98,6 @@ namespace Muuzy.Class
         {
             get { return "UserInfo.xml"; }
         }
-
         public static bool CreateDir()
         {
             try

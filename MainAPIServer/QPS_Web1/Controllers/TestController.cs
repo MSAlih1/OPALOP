@@ -1,8 +1,17 @@
-﻿using Api.Models;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.Serialization.Formatters;
 using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Api.Models;
+using Newtonsoft.Json.Serialization;
+using Muuzy.Class;
 
 namespace Api.Controllers
 {
@@ -19,6 +28,7 @@ namespace Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("secured/ping")]
+
         public IHttpActionResult Test()
         {
             QpiroJSON resp = new QpiroJSON();
@@ -26,4 +36,6 @@ namespace Api.Controllers
             return this.Json<QpiroJSON>(resp);
         }
     }
+
+
 }

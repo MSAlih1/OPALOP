@@ -1,5 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Web;
 
 namespace QPS_Method1._QPS.Class
 {

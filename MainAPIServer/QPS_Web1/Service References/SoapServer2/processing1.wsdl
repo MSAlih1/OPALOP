@@ -32,24 +32,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="XmlUpdate">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="AccessKey" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="_Value" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="ValueArtir" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="XmlUpdateResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="XmlUpdateResult" type="s:boolean" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
       <s:element name="DownloadInstaPhotos">
         <s:complexType>
           <s:sequence>
@@ -98,6 +80,24 @@
           <s:element minOccurs="0" maxOccurs="1" name="newImage" type="s:base64Binary" />
         </s:sequence>
       </s:complexType>
+      <s:element name="XmlUpdate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AccessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="_Value" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ValueArtir" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="XmlUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="XmlUpdateResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="CreateDirSoapIn">
@@ -112,12 +112,6 @@
   <wsdl:message name="CreateXmlSoapOut">
     <wsdl:part name="parameters" element="tns:CreateXmlResponse" />
   </wsdl:message>
-  <wsdl:message name="XmlUpdateSoapIn">
-    <wsdl:part name="parameters" element="tns:XmlUpdate" />
-  </wsdl:message>
-  <wsdl:message name="XmlUpdateSoapOut">
-    <wsdl:part name="parameters" element="tns:XmlUpdateResponse" />
-  </wsdl:message>
   <wsdl:message name="DownloadInstaPhotosSoapIn">
     <wsdl:part name="parameters" element="tns:DownloadInstaPhotos" />
   </wsdl:message>
@@ -130,6 +124,12 @@
   <wsdl:message name="ImageGenerateSoapOut">
     <wsdl:part name="parameters" element="tns:ImageGenerateResponse" />
   </wsdl:message>
+  <wsdl:message name="XmlUpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:XmlUpdate" />
+  </wsdl:message>
+  <wsdl:message name="XmlUpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:XmlUpdateResponse" />
+  </wsdl:message>
   <wsdl:portType name="ProcessingSoap">
     <wsdl:operation name="CreateDir">
       <wsdl:input message="tns:CreateDirSoapIn" />
@@ -139,10 +139,6 @@
       <wsdl:input message="tns:CreateXmlSoapIn" />
       <wsdl:output message="tns:CreateXmlSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="XmlUpdate">
-      <wsdl:input message="tns:XmlUpdateSoapIn" />
-      <wsdl:output message="tns:XmlUpdateSoapOut" />
-    </wsdl:operation>
     <wsdl:operation name="DownloadInstaPhotos">
       <wsdl:input message="tns:DownloadInstaPhotosSoapIn" />
       <wsdl:output message="tns:DownloadInstaPhotosSoapOut" />
@@ -150,6 +146,10 @@
     <wsdl:operation name="ImageGenerate">
       <wsdl:input message="tns:ImageGenerateSoapIn" />
       <wsdl:output message="tns:ImageGenerateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="XmlUpdate">
+      <wsdl:input message="tns:XmlUpdateSoapIn" />
+      <wsdl:output message="tns:XmlUpdateSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ProcessingSoap" type="tns:ProcessingSoap">
@@ -172,15 +172,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="XmlUpdate">
-      <soap:operation soapAction="http://tempuri.org/XmlUpdate" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DownloadInstaPhotos">
       <soap:operation soapAction="http://tempuri.org/DownloadInstaPhotos" style="document" />
       <wsdl:input>
@@ -192,6 +183,15 @@
     </wsdl:operation>
     <wsdl:operation name="ImageGenerate">
       <soap:operation soapAction="http://tempuri.org/ImageGenerate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="XmlUpdate">
+      <soap:operation soapAction="http://tempuri.org/XmlUpdate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -220,15 +220,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="XmlUpdate">
-      <soap12:operation soapAction="http://tempuri.org/XmlUpdate" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="DownloadInstaPhotos">
       <soap12:operation soapAction="http://tempuri.org/DownloadInstaPhotos" style="document" />
       <wsdl:input>
@@ -240,6 +231,15 @@
     </wsdl:operation>
     <wsdl:operation name="ImageGenerate">
       <soap12:operation soapAction="http://tempuri.org/ImageGenerate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="XmlUpdate">
+      <soap12:operation soapAction="http://tempuri.org/XmlUpdate" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -1,5 +1,7 @@
-﻿using Api._QPR;
+﻿using Api;
+using Api._QPR;
 using ImageMagick;
+using Muuzy.Class;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,6 +13,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
+using System.Web;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Muuzy.Class
@@ -232,7 +236,6 @@ namespace Muuzy.Class
                 return null;
             }
         }
-
         public static int HexToInt(string val)
         {
             int sayi = Convert.ToInt32(val, 16);
@@ -832,7 +835,6 @@ namespace Muuzy.Class
 
             throw new Exception(string.Format("Can't convert {0} to {1}", Value, t.ToString()));
         }
-
         #region rotate image
 
         public static Bitmap RotateImage(System.Drawing.Image image, float angle)
@@ -904,7 +906,6 @@ namespace Muuzy.Class
 
             return _MiniSQ.IImage as Bitmap;
         }
-
         #endregion rotate image
 
         #region parlaklık tespiti için
@@ -923,9 +924,7 @@ namespace Muuzy.Class
         {
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
-
         #endregion parlaklık tespiti için
-
         public static Rectangle stringToRectangle(string vali)
         {
             var matches = Regex.Match(vali, @"\D*(\d+)\D*(\d+)\D*(\d+)\D*(\d+)");

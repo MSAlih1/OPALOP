@@ -1,13 +1,16 @@
 ﻿using ImageMagick;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Web;
 
 namespace Api._QPR
 {
     public class PartOfImage
     {
         public Rectangle ImagePartInfo { get; set; }
-
         public FileInfo ImageUrl { get; set; }
 
         private MagickImage newGeneratedImg = null;

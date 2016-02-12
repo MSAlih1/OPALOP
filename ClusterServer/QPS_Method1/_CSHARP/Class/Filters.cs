@@ -1,4 +1,13 @@
-﻿namespace QPS_Web1._CSHARP.Class
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Web;
+
+namespace QPS_Web1._CSHARP.Class
 {
     //public static class Filters
     //{

@@ -1,4 +1,9 @@
-﻿namespace QPS_Web1._QPS.Type
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace QPS_Web1._QPS.Type
 {
     public enum ImgType
     {

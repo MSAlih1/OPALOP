@@ -2,6 +2,9 @@
 using Muuzy.Class;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +21,7 @@ namespace Api._QPR.abstracts
         public Task<SoapServer7.ImageGenerateResponse> _resp7;
         public Task<SoapServer8.ImageGenerateResponse> _resp8;
         public Task<SoapTest.ImageGenerateResponse> _respLocalTest;
-        public object resp1, resp2, resp3, resp4, resp5, resp6, resp7, resp8;
+        public object resp0, resp1, resp2, resp3, resp4, resp5, resp6, resp7, resp8;
         private SoapServer1.ProcessingSoapClient server1;
         private SoapServer2.ProcessingSoapClient server2;
         private SoapServer3.ProcessingSoapClient server3;
@@ -27,13 +30,11 @@ namespace Api._QPR.abstracts
         private SoapServer6.ProcessingSoapClient server6;
         private SoapServer7.ProcessingSoapClient server7;
         private SoapServer8.ProcessingSoapClient server8;
-        private SoapTest.ProcessingSoapClient serverLocalTest;
-
+        private SoapTest.ProcessingSoapClient serverLocalTest;//local
         public ServerAsyncCallBack()
         {
-            //serverLocalTest = new SoapTest.ProcessingSoapClient();
-            //serverLocalTest.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-
+            serverLocalTest = new SoapTest.ProcessingSoapClient();
+            serverLocalTest.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
             //
             server1 = new SoapServer1.ProcessingSoapClient();
             server1.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
@@ -66,8 +67,12 @@ namespace Api._QPR.abstracts
             switch (typi)
             {
                 case AsyncCallType.CreateDir:
-                    //serverLocalTest.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    //
+                    if (UserProperty.ComputerNumber == 1)//LOCAL TEST
+                    {
+                        serverLocalTest.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                        return;
+                    }
+
                     resp1 = server1.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                     Thread.Sleep(1);
                     resp2 = server2.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
@@ -87,8 +92,11 @@ namespace Api._QPR.abstracts
                     break;
 
                 case AsyncCallType.CreateXml:
-                    //serverLocalTest.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    //
+                    if (UserProperty.ComputerNumber == 1)//LOCAL TEST
+                    {
+                        serverLocalTest.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                        return;
+                    }
                     resp1 = server1.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                     Thread.Sleep(1);
                     resp2 = server2.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
@@ -109,8 +117,13 @@ namespace Api._QPR.abstracts
 
                 case AsyncCallType.DownloadInstaPhotos:
                     List<string> potos = (obj[0] as List<string>);
-                    //serverLocalTest.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), potos.ToArray());
-                    //
+                    if (UserProperty.ComputerNumber == 1)//LOCAL TEST
+                    {
+                        SoapTest.ArrayOfString tst0 = new SoapTest.ArrayOfString();
+                        tst0.AddRange(potos);
+                        resp0 = serverLocalTest.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst0);
+                        return;
+                    }
                     SoapServer1.ArrayOfString tst1 = new SoapServer1.ArrayOfString();
                     tst1.AddRange(potos);
                     resp1 = server1.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst1);
@@ -155,8 +168,12 @@ namespace Api._QPR.abstracts
                 case AsyncCallType.ImageGenerate:
                     List<PartOfImage> Imgs = obj[0] as List<PartOfImage>;
                     int icon = 0;
-                    //_respLocalTest = serverLocalTest.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
-                    //
+                    if (UserProperty.ComputerNumber == 1)//LOCAL TEST
+                    {
+                        _respLocalTest = serverLocalTest.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
+                        return;
+                    }
+
                     _resp1 = server1.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
                     Thread.Sleep(1);
@@ -183,6 +200,7 @@ namespace Api._QPR.abstracts
                     break;
 
                 case AsyncCallType.XmlUpdate:
+                    //not necessary
                     //resp1 = server1.XmlUpdateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), null, 0, false);
                     break;
 

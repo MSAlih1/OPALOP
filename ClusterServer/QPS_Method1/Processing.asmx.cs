@@ -1,5 +1,12 @@
 ﻿using QPS_Method1._QPS;
+using QPS_Web1._QPS;
 using QPS_Web1._QPS.Class;
+using QPS_Web1._QPS.Type;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Web;
 using System.Web.Services;
 
 namespace QPS_Method1

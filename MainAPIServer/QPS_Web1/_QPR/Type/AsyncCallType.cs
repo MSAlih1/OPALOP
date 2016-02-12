@@ -1,4 +1,9 @@
-﻿namespace Api._QPR.Type
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Api._QPR.Type
 {
     public enum AsyncCallType
     {

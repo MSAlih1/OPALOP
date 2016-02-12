@@ -77,7 +77,17 @@ namespace Muuzy.Class
                 if (Photocount > 0)
                 {
                     foreach (var item in photos)
-                        imgList.Add(item.images.thumbnail.url);
+                    {
+                        string[] img = item.images.thumbnail.url.Split('?');
+                        if (img.Length == 2)
+                        {
+                            imgList.Add(img[0]);
+                        }
+                        else if (img.Length == 1)
+                        {
+                            imgList.Add(img[0]);
+                        }
+                    }
                 }
                 mediam = null;
                 info = null;

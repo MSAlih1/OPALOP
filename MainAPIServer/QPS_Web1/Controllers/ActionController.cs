@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -597,7 +598,6 @@ namespace Api.Controllers
             snc = UserProperty.XmlCreate();
             return snc;
         }
-
         //[Authorize]
         //[HttpPost]
         //[Route("uploads/mini")]

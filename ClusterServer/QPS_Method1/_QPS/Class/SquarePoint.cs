@@ -1,15 +1,16 @@
 ﻿using QPS_Web1._CSHARP.Class;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace QPS_Web1._QPS.Class
 {
     public class SquarePoint
     {
         private string hexname = "";
-
         public int SAvgArb { get; set; }
-
         public int W { get; set; }
-
         public int H { get; set; }
 
         public SquarePoint(int _w, int _h, string _colornexname)
