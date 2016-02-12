@@ -21,3 +21,6 @@ about 4095 mini picture in lagest photo.
 
 -9583 count mini picture in
 ![OnePhotoALofOfPictures](https://raw.githubusercontent.com/MSAlih1/OPALOP/master/self-test-24x24-opalop.jpg)
+
+
+This work is licensed under the Apache License, Version 2.0 
