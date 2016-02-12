@@ -234,3 +234,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+MainAPIServer/QPS_Web1/UserFolders/
+ClusterServer/QPS_Method1/UserFolders/
