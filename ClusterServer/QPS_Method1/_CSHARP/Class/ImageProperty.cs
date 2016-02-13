@@ -21,311 +21,11 @@ namespace QPS_Web1._CSHARP.Class
 {
     public static class ImageProperty
     {
+        public static float[] angle = new float[] { 90, 180, 270, 360 };
+        public static Random random = new Random();
         private const int bytesPerPixel = 4;
 
-        public static object StringToEnum(Type t, string Value)
-        {
-            foreach (FieldInfo fi in t.GetFields())
-                if (fi.Name == Value)
-                    return fi.GetValue(null);
-
-            throw new Exception(string.Format("Can't convert {0} to {1}", Value, t.ToString()));
-        }
-
-        public static float[] angle = new float[] { 90, 180, 270, 360 };
         public static string JPG { get { return ".jpg"; } }
-
-        #region rotate image
-
-        public static Bitmap SmartRotate(ImgSquare _AreaSQ, ImgSquare _MiniSQ)
-        {
-            List<QuardPixAvg> Alq = _AreaSQ.QuardAvg.OrderBy(p => p.QAvgAbs).ToList();
-            List<QuardPixAvg> Mlq = _MiniSQ.QuardAvg.OrderBy(p => p.QAvgAbs).ToList();
-            int tolerans = 0;
-            QuardPixAvg snc = new QuardPixAvg();
-            int cont = 0;
-            do
-            {
-                tolerans += 1050903;
-                snc = Mlq
-                   .Where(p =>
-                       p.QAvgAbs + tolerans > Alq[Alq.Count - 1].QAvgAbs
-                       &&
-                       p.QAvgAbs - tolerans < Alq[Alq.Count - 1].QAvgAbs)
-                        .FirstOrDefault();
-                cont++;
-            }
-            while (snc == null || cont > 10);
-
-            if (snc == null)
-                return _MiniSQ.IImage as Bitmap;
-
-            if (snc.Bolum == QuardBolum.SolUst)
-                return RotateImage(_MiniSQ.IImage, angle[1]);
-            else if (snc.Bolum == QuardBolum.SagUst)
-                return RotateImage(_MiniSQ.IImage, angle[0]);
-            //else if (snc.Bolum == ImageProcess.QuardBolum.SolAlt)
-            //return ImageStatics.RotateImage(_MiniSQ.IImage, angle[2]);
-            else if ((snc.Bolum == QuardBolum.SagAlt) || (snc.Bolum == QuardBolum.SolAlt))
-                return _MiniSQ.IImage as Bitmap;
-
-            return _MiniSQ.IImage as Bitmap;
-        }
-
-        public static Bitmap RotateImage(System.Drawing.Image image, float angle)
-        {
-            if (image == null)
-            {
-                return null;
-            }
-
-            Size size = image.Size;
-            if (size.Width < 1 || size.Height < 1)
-            {
-                return null;
-            }
-
-            Bitmap tempImage = new Bitmap(size.Width, size.Height);
-            using (Graphics tempGraphics = Graphics.FromImage(tempImage))
-            {
-                PointF center = new PointF((float)size.Width / 2F, (float)size.Height / 2F);
-                tempGraphics.TranslateTransform(center.X, center.Y, MatrixOrder.Prepend);
-                tempGraphics.RotateTransform(angle != 180F ? angle : 182F/*at 180 exact angle the rotate make a small shift of image I don't know why!*/);
-                tempGraphics.TranslateTransform(-center.X, -center.Y, MatrixOrder.Prepend);
-                tempGraphics.DrawImage(image, new Point(0, 0));
-            }
-            for (int _h = 0; _h < image.Height; _h++)
-            {
-                tempImage.SetPixel(0, _h, tempImage.GetPixel(1, _h));
-                tempImage.SetPixel(image.Width - 1, _h, tempImage.GetPixel(image.Width - 2, _h));
-            }
-            for (int _w = 0; _w < image.Width; _w++)
-            {
-                tempImage.SetPixel(_w, 0, tempImage.GetPixel(_w, 1));
-                tempImage.SetPixel(_w, image.Width - 1, tempImage.GetPixel(_w, image.Width - 2));
-            }
-            return tempImage;
-        }
-
-        #endregion rotate image
-
-        #region parlaklık tespiti için
-
-        public static int map(int x, int in_min, int in_max, int out_min, int out_max)
-        {
-            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-        }
-
-        public static int BrightnessPercent(int fronRGB)
-        {
-            return BrightnessPercent(Color.FromArgb(fronRGB));
-        }
-
-        public static int BrightnessPercent(Color cl)
-        {
-            return map(map(Color.FromArgb(cl.R, cl.G, cl.B).ToArgb(), -16777216, -1, 0, 255), 0, 255, 0, 100);
-        }
-
-        #endregion parlaklık tespiti için
-
-        public static Image resizeImage(Image imgToResize, Size size)
-        {
-            return (Image)(new Bitmap(imgToResize.Clone() as Image, size));
-        }
-
-        public static Image resizeImage2(Image imgToResize, Size size)
-        {
-            Bitmap btm = new Bitmap(imgToResize, size);
-            Graphics gr = Graphics.FromImage(btm);
-            gr.DrawImage(imgToResize, 0, 0, size.Width, size.Height);
-            gr.Dispose();
-            return btm;
-        }
-
-        public static List<QuardPixAvg> Quard(System.Drawing.Bitmap img)
-        {
-            int _w = img.Width / 2;
-            int _h = img.Height / 2;
-            List<Bitmap> lst = new List<System.Drawing.Bitmap>();
-            lst.Add(img.Clone(new Rectangle(0, 0, _w, _h), img.PixelFormat) as Bitmap);
-            lst.Add(img.Clone(new Rectangle(_w, 0, _w, _h), img.PixelFormat) as Bitmap);
-            lst.Add(img.Clone(new Rectangle(0, _h, _w, _h), img.PixelFormat) as Bitmap);
-            lst.Add(img.Clone(new Rectangle(_w, _h, _w, _h), img.PixelFormat) as Bitmap);
-
-            int[,] pixavg = new int[5, 3];
-            for (int W = 0; W < _w; W++)
-            {
-                for (int H = 0; H < _h; H++)
-                {
-                    Color a = lst[0].GetPixel(W, H);
-                    pixavg[0, 0] += a.R;
-                    pixavg[0, 1] += a.G;
-                    pixavg[0, 2] += a.B;
-
-                    Color b = lst[1].GetPixel(W, H);
-                    pixavg[1, 0] += b.R;
-                    pixavg[1, 1] += b.G;
-                    pixavg[1, 2] += b.B;
-
-                    Color c = lst[2].GetPixel(W, H);
-                    pixavg[2, 0] += c.R;
-                    pixavg[2, 1] += c.G;
-                    pixavg[2, 2] += c.B;
-
-                    Color d = lst[3].GetPixel(W, H);
-                    pixavg[3, 0] += d.R;
-                    pixavg[3, 1] += d.G;
-                    pixavg[3, 2] += d.B;
-
-                    if (W == 0 && H == 0 || W == _w - 1 && H == _h - 1)
-                    {
-                        continue;
-                    }
-                    pixavg[4, 0] += a.R + b.R + c.R;
-                    pixavg[4, 1] += a.G + b.G + c.G;
-                    pixavg[4, 2] += a.B + b.B + c.B;
-                }
-            }
-            List<QuardPixAvg> lavg = new List<QuardPixAvg>();
-            int totalminiPix = (_w * _h);
-            pixavg[0, 0] /= totalminiPix;
-            pixavg[0, 1] /= totalminiPix;
-            pixavg[0, 2] /= totalminiPix;
-
-            pixavg[1, 0] /= totalminiPix;
-            pixavg[1, 1] /= totalminiPix;
-            pixavg[1, 2] /= totalminiPix;
-
-            pixavg[2, 0] /= totalminiPix;
-            pixavg[2, 1] /= totalminiPix;
-            pixavg[2, 2] /= totalminiPix;
-
-            pixavg[3, 0] /= totalminiPix;
-            pixavg[3, 1] /= totalminiPix;
-            pixavg[3, 2] /= totalminiPix;
-
-            int totalPix = (img.Width) * (img.Height);
-            pixavg[4, 0] /= totalPix;
-            pixavg[4, 1] /= totalPix;
-            pixavg[4, 2] /= totalPix;
-
-            lavg.Add(new QuardPixAvg
-                (Color.FromArgb((pixavg[0, 0]), (pixavg[0, 1]), (pixavg[0, 2])), QuardBolum.SolUst));
-
-            lavg.Add(new QuardPixAvg
-                (Color.FromArgb((pixavg[1, 0]), (pixavg[1, 1]), (pixavg[1, 2])), QuardBolum.SagUst));
-
-            lavg.Add(new QuardPixAvg
-                (Color.FromArgb((pixavg[2, 0]), (pixavg[2, 1]), (pixavg[2, 2])), QuardBolum.SolAlt));
-
-            lavg.Add(new QuardPixAvg(Color.FromArgb((pixavg[3, 0]), (pixavg[3, 1]), (pixavg[3, 2])), QuardBolum.SagAlt));
-
-            lavg.Add(new QuardPixAvg
-                (Color.FromArgb((pixavg[4, 0]), (pixavg[4, 1]), (pixavg[4, 2])), QuardBolum.TotalAvg));
-
-            return lavg;
-        }
-
-        public static int GetImageAVGRgb(System.Drawing.Bitmap _im)
-        {
-            int _w = _im.Width - 1;
-            int _h = _im.Height - 1;
-            int r = 0, g = 0, b = 0;
-            for (int w = 1; w < _w; w++)
-            {
-                for (int h = 1; h < _h; h++)
-                {
-                    Color c = _im.GetPixel(w, h);
-                    r += c.R;
-                    g += c.G;
-                    b += c.B;
-                }
-            }
-            r = r / (_w * _w);
-            g = g / (_w * _w);
-            b = b / (_w * _w);
-            string hex = Color.FromArgb(r, g, b).Name.Substring(2);
-            int sayi = HexToInt(hex);
-            return sayi;
-        }
-
-        public static int HexToInt(string val)
-        {
-            int sayi = Convert.ToInt32(val, 16);
-            return sayi;
-        }
-
-        public static Bitmap OpenImageFile(string _path)
-        {
-            Bitmap img;
-            StreamReader reader = new StreamReader(_path);
-            img = (Bitmap)System.Drawing.Image.FromStream(reader.BaseStream);
-            reader.Close();
-            return img;
-        }
-
-        public static string GenerateRandomHexNumber(int digits)
-        {
-            byte[] buffer = new byte[digits / 2];
-            random.NextBytes(buffer);
-            string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
-            if (digits % 2 == 0)
-                return result;
-            return result + random.Next(16).ToString("X").ToLower();
-        }
-
-        public static Random random = new Random();
-
-        public static string ImageToBase64(System.Drawing.Bitmap image, System.Drawing.Imaging.ImageFormat format)
-        {
-            string base64String = "";
-            try
-            {
-                MemoryStream ms = new MemoryStream();
-                image.Save(ms, format);
-                byte[] imageBytes = ms.ToArray();
-                ms.Close();
-                string formt = "jpg";
-
-                if (format == ImageFormat.Png)
-                    formt = "png";
-                else if (format == ImageFormat.Jpeg)
-                    formt = "jpg";
-
-                base64String = "data:image/" + formt + ";base64," + Convert.ToBase64String(imageBytes);
-                imageBytes = new byte[0];
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-            return base64String;
-        }
-
-        public static Bitmap Transparnt(System.Drawing.Image img, int opacity)
-        {
-            Bitmap orginal = new Bitmap(img);
-            Bitmap transparent = new Bitmap(img.Width, img.Height);
-            transparent.MakeTransparent(Color.Black);
-            for (int i = 0; i < img.Width; i++)
-            {
-                for (int y = 0; y < img.Height; y++)
-                {
-                    Color c = orginal.GetPixel(i, y);
-                    if (c != Color.Transparent)
-                    {
-                        int a = (int)((float)c.A * ((float)opacity / 100));
-                        int r = (int)((float)c.R * ((float)opacity / 100));
-                        int g = (int)((float)c.G * ((float)opacity / 100));
-                        int b = (int)((float)c.B * ((float)opacity / 100));
-                        Color newC = Color.FromArgb(a, r, g, b);
-                        transparent.SetPixel(i, y, newC);
-                    }
-                }
-            }
-            orginal.Dispose();
-            return transparent;
-        }
 
         public static Bitmap AdjustBrightness(this Bitmap Image, int Value)
         {
@@ -384,6 +84,40 @@ namespace QPS_Web1._CSHARP.Class
             return resultBitmap;
         }
 
+        public static byte Calculate(byte color1, byte color2, ColorCalculationType calculationType)
+        {
+            byte resultValue = 0;
+            int intResult = 0;
+
+            if (calculationType == ColorCalculationType.Add)
+                intResult = color1 + color2;
+            else if (calculationType == ColorCalculationType.Average)
+                intResult = (color1 + color2) / 2;
+            else if (calculationType == ColorCalculationType.SubtractLeft)
+                intResult = color1 - color2;
+            else if (calculationType == ColorCalculationType.SubtractRight)
+                intResult = color2 - color1;
+            else if (calculationType == ColorCalculationType.Difference)
+                intResult = Math.Abs(color1 - color2);
+            else if (calculationType == ColorCalculationType.Multiply)
+                intResult = (int)((color1 / 255.0 * color2 / 255.0) * 255.0);
+            else if (calculationType == ColorCalculationType.Min)
+                intResult = (color1 < color2 ? color1 : color2);
+            else if (calculationType == ColorCalculationType.Max)
+                intResult = (color1 > color2 ? color1 : color2);
+            else if (calculationType == ColorCalculationType.Amplitude)
+                intResult = (int)(Math.Sqrt(color1 * color1 + color2 * color2) / Math.Sqrt(2.0));
+
+            if (intResult < 0)
+                resultValue = 0;
+            else if (intResult > 255)
+                resultValue = 255;
+            else
+                resultValue = (byte)intResult;
+
+            return resultValue;
+        }
+
         public static Bitmap Contrast(this Bitmap sourceBitmap, int threshold)
         {
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0,
@@ -439,38 +173,78 @@ namespace QPS_Web1._CSHARP.Class
             return resultBitmap;
         }
 
-        public static byte Calculate(byte color1, byte color2, ColorCalculationType calculationType)
+        public static string GenerateRandomHexNumber(int digits)
         {
-            byte resultValue = 0;
-            int intResult = 0;
+            byte[] buffer = new byte[digits / 2];
+            random.NextBytes(buffer);
+            string result = String.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
+            if (digits % 2 == 0)
+                return result;
+            return result + random.Next(16).ToString("X").ToLower();
+        }
 
-            if (calculationType == ColorCalculationType.Add)
-                intResult = color1 + color2;
-            else if (calculationType == ColorCalculationType.Average)
-                intResult = (color1 + color2) / 2;
-            else if (calculationType == ColorCalculationType.SubtractLeft)
-                intResult = color1 - color2;
-            else if (calculationType == ColorCalculationType.SubtractRight)
-                intResult = color2 - color1;
-            else if (calculationType == ColorCalculationType.Difference)
-                intResult = Math.Abs(color1 - color2);
-            else if (calculationType == ColorCalculationType.Multiply)
-                intResult = (int)((color1 / 255.0 * color2 / 255.0) * 255.0);
-            else if (calculationType == ColorCalculationType.Min)
-                intResult = (color1 < color2 ? color1 : color2);
-            else if (calculationType == ColorCalculationType.Max)
-                intResult = (color1 > color2 ? color1 : color2);
-            else if (calculationType == ColorCalculationType.Amplitude)
-                intResult = (int)(Math.Sqrt(color1 * color1 + color2 * color2) / Math.Sqrt(2.0));
+        public static int GetImageAVGRgb(System.Drawing.Bitmap _im)
+        {
+            int _w = _im.Width - 1;
+            int _h = _im.Height - 1;
+            int r = 0, g = 0, b = 0;
+            for (int w = 1; w < _w; w++)
+            {
+                for (int h = 1; h < _h; h++)
+                {
+                    Color c = _im.GetPixel(w, h);
+                    r += c.R;
+                    g += c.G;
+                    b += c.B;
+                }
+            }
+            r = r / (_w * _w);
+            g = g / (_w * _w);
+            b = b / (_w * _w);
+            string hex = Color.FromArgb(r, g, b).Name.Substring(2);
+            int sayi = HexToInt(hex);
+            return sayi;
+        }
 
-            if (intResult < 0)
-                resultValue = 0;
-            else if (intResult > 255)
-                resultValue = 255;
-            else
-                resultValue = (byte)intResult;
+        public static int HexToInt(string val)
+        {
+            int sayi = Convert.ToInt32(val, 16);
+            return sayi;
+        }
 
-            return resultValue;
+        public static string ImageToBase64(System.Drawing.Bitmap image, System.Drawing.Imaging.ImageFormat format)
+        {
+            string base64String = "";
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+                ms.Close();
+                string formt = "jpg";
+
+                if (format == ImageFormat.Png)
+                    formt = "png";
+                else if (format == ImageFormat.Jpeg)
+                    formt = "jpg";
+
+                base64String = "data:image/" + formt + ";base64," + Convert.ToBase64String(imageBytes);
+                imageBytes = new byte[0];
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            return base64String;
+        }
+
+        public static Bitmap OpenImageFile(string _path)
+        {
+            Bitmap img;
+            StreamReader reader = new StreamReader(_path);
+            img = (Bitmap)System.Drawing.Image.FromStream(reader.BaseStream);
+            reader.Close();
+            return img;
         }
 
         public static NewImagePart PointGenerator(string UserName, byte[] ImagePart, int _x, int _y, int width, int height, int PxFormat)
@@ -485,14 +259,7 @@ namespace QPS_Web1._CSHARP.Class
 
                 using (MagickImage imagem = new MagickImage(ImagePart))
                 {
-                    //############# ResizeImage #############
-                    //int yuzde = 100;
                     imagem.Quality = 100;
-                    //int _w = imagem.Width + (imagem.Width / 100) * yuzde;
-                    //int _h = imagem.Height + (imagem.Height / 100) * yuzde;
-                    //int new_W = _w - (_w % (int)_pixFor);
-                    //int new_H = _h - (_h % (int)_pixFor);
-                    //imagem.Resize(new_W, new_H);
                     imagem.Blur(5, 5);
 
                     List<ImgSquare> sp0 = new List<ImgSquare>();
@@ -652,27 +419,27 @@ namespace QPS_Web1._CSHARP.Class
                             throw new Exception("Tanımsız format") { Source = "" };
                             break;
 
-                        case PixFormat._12x12: //12:36 sn
+                        case PixFormat._12x12:
                             opacity = 50;
                             break;
 
-                        case PixFormat._20x20: //3:10 sn
+                        case PixFormat._20x20:
                             opacity = 50;
                             break;
 
-                        case PixFormat._36x36: //0:50 sn
+                        case PixFormat._36x36:
                             opacity = 50;
                             break;
 
-                        case PixFormat._48x48: //0:27 sn
+                        case PixFormat._48x48:
                             opacity = 50;
                             break;
 
-                        case PixFormat._64x64: //0:15 sn
+                        case PixFormat._64x64:
                             opacity = 50;
                             break;
 
-                        case PixFormat._94x94: //0:08 sn
+                        case PixFormat._94x94:
                             opacity = 50;
                             break;
                     }
@@ -695,11 +462,6 @@ namespace QPS_Web1._CSHARP.Class
                             XElement root = doc.Elements("_" + resources.UserName).First();
                             XElement InstagramP = root.Elements("InstagramPhotos").FirstOrDefault();
                             XElement[] photos = (from p in InstagramP.Elements() where p.Attribute("useThis").Value.ToLower() == "true" select p).ToArray();
-                            //list = new string[photos.Count()];
-
-                            //for (int i = 0; i < photos.Count(); i++)
-                            //    list[i] = Path.Combine(MiniPicturePath, photos[i].Value);
-
                             ///////////////////////////////////////////////////
                             if (photos.Count() == 0)
                                 throw new Exception("Bu Formata Uygun Resimler Bulunamadı") { Source = "" };
@@ -849,6 +611,227 @@ namespace QPS_Web1._CSHARP.Class
                 throw e;
             }
             return null;
+        }
+
+        public static List<QuardPixAvg> Quard(System.Drawing.Bitmap img)
+        {
+            int _w = img.Width / 2;
+            int _h = img.Height / 2;
+            List<Bitmap> lst = new List<System.Drawing.Bitmap>();
+            lst.Add(img.Clone(new Rectangle(0, 0, _w, _h), img.PixelFormat) as Bitmap);
+            lst.Add(img.Clone(new Rectangle(_w, 0, _w, _h), img.PixelFormat) as Bitmap);
+            lst.Add(img.Clone(new Rectangle(0, _h, _w, _h), img.PixelFormat) as Bitmap);
+            lst.Add(img.Clone(new Rectangle(_w, _h, _w, _h), img.PixelFormat) as Bitmap);
+
+            int[,] pixavg = new int[5, 3];
+            for (int W = 0; W < _w; W++)
+            {
+                for (int H = 0; H < _h; H++)
+                {
+                    Color a = lst[0].GetPixel(W, H);
+                    pixavg[0, 0] += a.R;
+                    pixavg[0, 1] += a.G;
+                    pixavg[0, 2] += a.B;
+
+                    Color b = lst[1].GetPixel(W, H);
+                    pixavg[1, 0] += b.R;
+                    pixavg[1, 1] += b.G;
+                    pixavg[1, 2] += b.B;
+
+                    Color c = lst[2].GetPixel(W, H);
+                    pixavg[2, 0] += c.R;
+                    pixavg[2, 1] += c.G;
+                    pixavg[2, 2] += c.B;
+
+                    Color d = lst[3].GetPixel(W, H);
+                    pixavg[3, 0] += d.R;
+                    pixavg[3, 1] += d.G;
+                    pixavg[3, 2] += d.B;
+
+                    if (W == 0 && H == 0 || W == _w - 1 && H == _h - 1)
+                    {
+                        continue;
+                    }
+                    pixavg[4, 0] += a.R + b.R + c.R;
+                    pixavg[4, 1] += a.G + b.G + c.G;
+                    pixavg[4, 2] += a.B + b.B + c.B;
+                }
+            }
+            List<QuardPixAvg> lavg = new List<QuardPixAvg>();
+            int totalminiPix = (_w * _h);
+            pixavg[0, 0] /= totalminiPix;
+            pixavg[0, 1] /= totalminiPix;
+            pixavg[0, 2] /= totalminiPix;
+
+            pixavg[1, 0] /= totalminiPix;
+            pixavg[1, 1] /= totalminiPix;
+            pixavg[1, 2] /= totalminiPix;
+
+            pixavg[2, 0] /= totalminiPix;
+            pixavg[2, 1] /= totalminiPix;
+            pixavg[2, 2] /= totalminiPix;
+
+            pixavg[3, 0] /= totalminiPix;
+            pixavg[3, 1] /= totalminiPix;
+            pixavg[3, 2] /= totalminiPix;
+
+            int totalPix = (img.Width) * (img.Height);
+            pixavg[4, 0] /= totalPix;
+            pixavg[4, 1] /= totalPix;
+            pixavg[4, 2] /= totalPix;
+
+            lavg.Add(new QuardPixAvg
+                (Color.FromArgb((pixavg[0, 0]), (pixavg[0, 1]), (pixavg[0, 2])), QuardBolum.SolUst));
+
+            lavg.Add(new QuardPixAvg
+                (Color.FromArgb((pixavg[1, 0]), (pixavg[1, 1]), (pixavg[1, 2])), QuardBolum.SagUst));
+
+            lavg.Add(new QuardPixAvg
+                (Color.FromArgb((pixavg[2, 0]), (pixavg[2, 1]), (pixavg[2, 2])), QuardBolum.SolAlt));
+
+            lavg.Add(new QuardPixAvg(Color.FromArgb((pixavg[3, 0]), (pixavg[3, 1]), (pixavg[3, 2])), QuardBolum.SagAlt));
+
+            lavg.Add(new QuardPixAvg
+                (Color.FromArgb((pixavg[4, 0]), (pixavg[4, 1]), (pixavg[4, 2])), QuardBolum.TotalAvg));
+
+            return lavg;
+        }
+
+        public static Image resizeImage(Image imgToResize, Size size)
+        {
+            return (Image)(new Bitmap(imgToResize.Clone() as Image, size));
+        }
+
+        public static Image resizeImage2(Image imgToResize, Size size)
+        {
+            Bitmap btm = new Bitmap(imgToResize, size);
+            Graphics gr = Graphics.FromImage(btm);
+            gr.DrawImage(imgToResize, 0, 0, size.Width, size.Height);
+            gr.Dispose();
+            return btm;
+        }
+
+        public static object StringToEnum(Type t, string Value)
+        {
+            foreach (FieldInfo fi in t.GetFields())
+                if (fi.Name == Value)
+                    return fi.GetValue(null);
+
+            throw new Exception(string.Format("Can't convert {0} to {1}", Value, t.ToString()));
+        }
+        #region rotate image
+
+        public static Bitmap RotateImage(System.Drawing.Image image, float angle)
+        {
+            if (image == null)
+            {
+                return null;
+            }
+
+            Size size = image.Size;
+            if (size.Width < 1 || size.Height < 1)
+            {
+                return null;
+            }
+
+            Bitmap tempImage = new Bitmap(size.Width, size.Height);
+            using (Graphics tempGraphics = Graphics.FromImage(tempImage))
+            {
+                PointF center = new PointF((float)size.Width / 2F, (float)size.Height / 2F);
+                tempGraphics.TranslateTransform(center.X, center.Y, MatrixOrder.Prepend);
+                tempGraphics.RotateTransform(angle != 180F ? angle : 182F/*at 180 exact angle the rotate make a small shift of image I don't know why!*/);
+                tempGraphics.TranslateTransform(-center.X, -center.Y, MatrixOrder.Prepend);
+                tempGraphics.DrawImage(image, new Point(0, 0));
+            }
+            for (int _h = 0; _h < image.Height; _h++)
+            {
+                tempImage.SetPixel(0, _h, tempImage.GetPixel(1, _h));
+                tempImage.SetPixel(image.Width - 1, _h, tempImage.GetPixel(image.Width - 2, _h));
+            }
+            for (int _w = 0; _w < image.Width; _w++)
+            {
+                tempImage.SetPixel(_w, 0, tempImage.GetPixel(_w, 1));
+                tempImage.SetPixel(_w, image.Width - 1, tempImage.GetPixel(_w, image.Width - 2));
+            }
+            return tempImage;
+        }
+
+        public static Bitmap SmartRotate(ImgSquare _AreaSQ, ImgSquare _MiniSQ)
+        {
+            List<QuardPixAvg> Alq = _AreaSQ.QuardAvg.OrderBy(p => p.QAvgAbs).ToList();
+            List<QuardPixAvg> Mlq = _MiniSQ.QuardAvg.OrderBy(p => p.QAvgAbs).ToList();
+            int tolerans = 0;
+            QuardPixAvg snc = new QuardPixAvg();
+            int cont = 0;
+            do
+            {
+                tolerans += 1050903;
+                snc = Mlq
+                   .Where(p =>
+                       p.QAvgAbs + tolerans > Alq[Alq.Count - 1].QAvgAbs
+                       &&
+                       p.QAvgAbs - tolerans < Alq[Alq.Count - 1].QAvgAbs)
+                        .FirstOrDefault();
+                cont++;
+            }
+            while (snc == null || cont > 10);
+
+            if (snc == null)
+                return _MiniSQ.IImage as Bitmap;
+
+            if (snc.Bolum == QuardBolum.SolUst)
+                return RotateImage(_MiniSQ.IImage, angle[1]);
+            else if (snc.Bolum == QuardBolum.SagUst)
+                return RotateImage(_MiniSQ.IImage, angle[0]);
+            //else if (snc.Bolum == ImageProcess.QuardBolum.SolAlt)
+            //return ImageStatics.RotateImage(_MiniSQ.IImage, angle[2]);
+            else if ((snc.Bolum == QuardBolum.SagAlt) || (snc.Bolum == QuardBolum.SolAlt))
+                return _MiniSQ.IImage as Bitmap;
+
+            return _MiniSQ.IImage as Bitmap;
+        }
+        #endregion rotate image
+
+        #region parlaklık tespiti için
+
+        public static int BrightnessPercent(int fronRGB)
+        {
+            return BrightnessPercent(Color.FromArgb(fronRGB));
+        }
+
+        public static int BrightnessPercent(Color cl)
+        {
+            return map(map(Color.FromArgb(cl.R, cl.G, cl.B).ToArgb(), -16777216, -1, 0, 255), 0, 255, 0, 100);
+        }
+
+        public static int map(int x, int in_min, int in_max, int out_min, int out_max)
+        {
+            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+        #endregion parlaklık tespiti için
+        public static Bitmap Transparnt(System.Drawing.Image img, int opacity)
+        {
+            Bitmap orginal = new Bitmap(img);
+            Bitmap transparent = new Bitmap(img.Width, img.Height);
+            transparent.MakeTransparent(Color.Black);
+            for (int i = 0; i < img.Width; i++)
+            {
+                for (int y = 0; y < img.Height; y++)
+                {
+                    Color c = orginal.GetPixel(i, y);
+                    if (c != Color.Transparent)
+                    {
+                        int a = (int)((float)c.A * ((float)opacity / 100));
+                        int r = (int)((float)c.R * ((float)opacity / 100));
+                        int g = (int)((float)c.G * ((float)opacity / 100));
+                        int b = (int)((float)c.B * ((float)opacity / 100));
+                        Color newC = Color.FromArgb(a, r, g, b);
+                        transparent.SetPixel(i, y, newC);
+                    }
+                }
+            }
+            orginal.Dispose();
+            return transparent;
         }
     }
 }

@@ -259,7 +259,7 @@ namespace Api.Controllers
                     string time = TimeSpan.FromTicks(end.Ticks - start.Ticks).ToString();
                     resp.Time = (time.Split(':')[time.Split(':').Length - 2] + ":" + time.Split(':')[time.Split(':').Length - 1]);
                     ///////////////////////////////////////
-                    if (UserProperty.ComputerNumber == 1)
+                    if (UserProperty.ComputerNumber == 1)//local test
                     {
                         byte[] bitmp0 = servers._respLocalTest.Result.Body.ImageGenerateResult.newImage;
                         Rectangle br0 = ImageProperty.stringToRectangle(servers._respLocalTest.Result.Body.ImageGenerateResult.ImagePartInfo);
