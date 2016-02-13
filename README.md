@@ -13,8 +13,6 @@ WebMethod Servers "http://qpp[1-8].azurewebsites.net" (clustered servers).
 
 about 4095 mini picture in lagest photo.
 
-(in this project it is NOT working on ServiceReference)
-
 -incomplete picure
 ![OnePhotoALofOfPictures](https://raw.githubusercontent.com/MSAlih1/OPALOP-Picture-Mosaic/master/20x20_test.jpg)
 
