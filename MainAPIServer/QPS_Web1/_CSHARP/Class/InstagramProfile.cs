@@ -60,6 +60,7 @@ namespace Muuzy.Class
             if (isInstagram == "instagram")
             {
                 InstagramApiWrapper wrap = InstagramApiWrapper.GetInstance(new Configuration(getAccessToken(), userid));
+                wrap.Configuration.CurrentUserId = userid;
                 InstagramResponse<InstagramMedia[]> mediam = wrap.CurrentUserRecentMedia(33, "", "");
                 List<InstagramMedia> photos = mediam.data.ToList();
                 int Photocount = photos.Count;
