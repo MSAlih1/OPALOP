@@ -231,82 +231,101 @@ namespace Api.Controllers
                     ServerAsyncCallBack servers = new ServerAsyncCallBack();
                     servers.Execute(_QPR.Type.AsyncCallType.ImageGenerate, imgsInf, (int)PixelFormat);
                     imgsInf.Clear();
-                    //do
-                    //{
-                    //    Thread.Sleep(1);
-                    //} while (servers._respLocalTest.Status == TaskStatus.WaitingForActivation);
-                    do
+                    if (UserProperty.ComputerNumber == 1)
                     {
-                        Thread.Sleep(999);
-                    } while (
-                    servers._resp1.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp2.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp3.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp4.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp5.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp6.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp7.Status == TaskStatus.WaitingForActivation ||
-                    servers._resp8.Status == TaskStatus.WaitingForActivation
-                    );
+                        do
+                        {
+                            Thread.Sleep(999);
+                        } while (servers._respLocalTest.Status == TaskStatus.WaitingForActivation);
+
+                    }
+                    else
+                    {
+                        do
+                        {
+                            Thread.Sleep(999);
+                        } while (
+                        servers._resp1.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp2.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp3.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp4.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp5.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp6.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp7.Status == TaskStatus.WaitingForActivation ||
+                        servers._resp8.Status == TaskStatus.WaitingForActivation
+                        );
+                    }
                     DateTime end = DateTime.Now;
                     string time = TimeSpan.FromTicks(end.Ticks - start.Ticks).ToString();
                     resp.Time = (time.Split(':')[time.Split(':').Length - 2] + ":" + time.Split(':')[time.Split(':').Length - 1]);
                     ///////////////////////////////////////
-                    //byte[] bitmp0 = servers._respLocalTest.Result.Body.ImageGenerateResult.newImage;
-                    //Rectangle br0 = ImageProperty.stringToRectangle(servers._respLocalTest.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp1 = servers._resp1.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br1 = ImageProperty.stringToRectangle(servers._resp1.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp2 = servers._resp2.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br2 = ImageProperty.stringToRectangle(servers._resp2.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp3 = servers._resp3.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br3 = ImageProperty.stringToRectangle(servers._resp3.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp4 = servers._resp4.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br4 = ImageProperty.stringToRectangle(servers._resp4.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp5 = servers._resp5.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br5 = ImageProperty.stringToRectangle(servers._resp5.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp6 = servers._resp6.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br6 = ImageProperty.stringToRectangle(servers._resp6.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp7 = servers._resp7.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br7 = ImageProperty.stringToRectangle(servers._resp7.Result.Body.ImageGenerateResult.ImagePartInfo);
-                    byte[] bitmp8 = servers._resp8.Result.Body.ImageGenerateResult.newImage;
-                    Rectangle br8 = ImageProperty.stringToRectangle(servers._resp8.Result.Body.ImageGenerateResult.ImagePartInfo);
-
-                    servers = null;
-                    int newW = 0, newH = 0;
-                    if (br1.Width < br1.Height)
+                    if (UserProperty.ComputerNumber == 1)
                     {
-                        newW = br1.Width * UserProperty.ComputerNumber;
-                        newH = br1.Height;
+                        byte[] bitmp0 = servers._respLocalTest.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br0 = ImageProperty.stringToRectangle(servers._respLocalTest.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        MagickImage img0 = new MagickImage(bitmp0);
+                        Bitmap newImg0 = new Bitmap(img0.Width, img0.Height);
+                        Graphics grr0 = Graphics.FromImage(newImg0);
+                        grr0.DrawImage(img0.ToBitmap(), br0.X, br0.Y);
+                        grr0.Dispose();
+                        (resp.Data as List<object>).Add(ImageProperty.ImageToBase64(newImg0, System.Drawing.Imaging.ImageFormat.Jpeg));
                     }
                     else
                     {
-                        newW = br1.Width;
-                        newH = br1.Height * UserProperty.ComputerNumber;
+                        byte[] bitmp1 = servers._resp1.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br1 = ImageProperty.stringToRectangle(servers._resp1.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp2 = servers._resp2.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br2 = ImageProperty.stringToRectangle(servers._resp2.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp3 = servers._resp3.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br3 = ImageProperty.stringToRectangle(servers._resp3.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp4 = servers._resp4.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br4 = ImageProperty.stringToRectangle(servers._resp4.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp5 = servers._resp5.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br5 = ImageProperty.stringToRectangle(servers._resp5.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp6 = servers._resp6.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br6 = ImageProperty.stringToRectangle(servers._resp6.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp7 = servers._resp7.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br7 = ImageProperty.stringToRectangle(servers._resp7.Result.Body.ImageGenerateResult.ImagePartInfo);
+                        byte[] bitmp8 = servers._resp8.Result.Body.ImageGenerateResult.newImage;
+                        Rectangle br8 = ImageProperty.stringToRectangle(servers._resp8.Result.Body.ImageGenerateResult.ImagePartInfo);
+
+                        servers = null;
+                        int newW = 0, newH = 0;
+                        if (br1.Width < br1.Height)
+                        {
+                            newW = br1.Width * UserProperty.ComputerNumber;
+                            newH = br1.Height;
+                        }
+                        else
+                        {
+                            newW = br1.Width;
+                            newH = br1.Height * UserProperty.ComputerNumber;
+                        }
+                        //MagickImage img0 = new MagickImage(bitmp0);
+
+                        MagickImage img1 = new MagickImage(bitmp1);
+                        MagickImage img2 = new MagickImage(bitmp2);
+                        MagickImage img3 = new MagickImage(bitmp3);
+                        MagickImage img4 = new MagickImage(bitmp4);
+                        MagickImage img5 = new MagickImage(bitmp5);
+                        MagickImage img6 = new MagickImage(bitmp6);
+                        MagickImage img7 = new MagickImage(bitmp7);
+                        MagickImage img8 = new MagickImage(bitmp8);
+
+                        Bitmap newImg = new Bitmap(newW, newH);
+                        Graphics grr = Graphics.FromImage(newImg);
+                        //grr.DrawImage(img0.ToBitmap(), br0.X, br0.Y);
+                        grr.DrawImage(img1.ToBitmap(), br1.X, br1.Y);
+                        grr.DrawImage(img2.ToBitmap(), br2.X, br2.Y);
+                        grr.DrawImage(img3.ToBitmap(), br3.X, br3.Y);
+                        grr.DrawImage(img4.ToBitmap(), br4.X, br4.Y);
+                        grr.DrawImage(img5.ToBitmap(), br5.X, br5.Y);
+                        grr.DrawImage(img6.ToBitmap(), br6.X, br6.Y);
+                        grr.DrawImage(img7.ToBitmap(), br7.X, br7.Y);
+                        grr.DrawImage(img8.ToBitmap(), br8.X, br8.Y);
+                        grr.Dispose();
+                        (resp.Data as List<object>).Add(ImageProperty.ImageToBase64(newImg, System.Drawing.Imaging.ImageFormat.Jpeg));
                     }
-                    //MagickImage img0 = new MagickImage(bitmp0);
-
-                    MagickImage img1 = new MagickImage(bitmp1);
-                    MagickImage img2 = new MagickImage(bitmp2);
-                    MagickImage img3 = new MagickImage(bitmp3);
-                    MagickImage img4 = new MagickImage(bitmp4);
-                    MagickImage img5 = new MagickImage(bitmp5);
-                    MagickImage img6 = new MagickImage(bitmp6);
-                    MagickImage img7 = new MagickImage(bitmp7);
-                    MagickImage img8 = new MagickImage(bitmp8);
-
-                    Bitmap newImg = new Bitmap(newW, newH);
-                    Graphics grr = Graphics.FromImage(newImg);
-                    //grr.DrawImage(img0.ToBitmap(), br0.X, br0.Y);
-                    grr.DrawImage(img1.ToBitmap(), br1.X, br1.Y);
-                    grr.DrawImage(img2.ToBitmap(), br2.X, br2.Y);
-                    grr.DrawImage(img3.ToBitmap(), br3.X, br3.Y);
-                    grr.DrawImage(img4.ToBitmap(), br4.X, br4.Y);
-                    grr.DrawImage(img5.ToBitmap(), br5.X, br5.Y);
-                    grr.DrawImage(img6.ToBitmap(), br6.X, br6.Y);
-                    grr.DrawImage(img7.ToBitmap(), br7.X, br7.Y);
-                    grr.DrawImage(img8.ToBitmap(), br8.X, br8.Y);
-                    grr.Dispose();
-                    (resp.Data as List<object>).Add(ImageProperty.ImageToBase64(newImg, System.Drawing.Imaging.ImageFormat.Jpeg));
                     ///////////////////////////////////////
                     UserProperty.XmlUpdate("Busy", 0, false);
                     time = "";

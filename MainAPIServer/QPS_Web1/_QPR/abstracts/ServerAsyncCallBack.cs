@@ -33,33 +33,39 @@ namespace Api._QPR.abstracts
         private SoapTest.ProcessingSoapClient serverLocalTest;//local
         public ServerAsyncCallBack()
         {
-            serverLocalTest = new SoapTest.ProcessingSoapClient();
-            serverLocalTest.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server1 = new SoapServer1.ProcessingSoapClient();
-            server1.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server2 = new SoapServer2.ProcessingSoapClient();
-            server2.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server3 = new SoapServer3.ProcessingSoapClient();
-            server3.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server4 = new SoapServer4.ProcessingSoapClient();
-            server4.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+            if (UserProperty.ComputerNumber == 1)
+            {
+                serverLocalTest = new SoapTest.ProcessingSoapClient();
+                serverLocalTest.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+            }
+            else
+            {
+                //
+                server1 = new SoapServer1.ProcessingSoapClient();
+                server1.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server2 = new SoapServer2.ProcessingSoapClient();
+                server2.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server3 = new SoapServer3.ProcessingSoapClient();
+                server3.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server4 = new SoapServer4.ProcessingSoapClient();
+                server4.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
 
-            //
-            server5 = new SoapServer5.ProcessingSoapClient();
-            server5.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server6 = new SoapServer6.ProcessingSoapClient();
-            server6.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server7 = new SoapServer7.ProcessingSoapClient();
-            server7.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-            //
-            server8 = new SoapServer8.ProcessingSoapClient();
-            server8.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server5 = new SoapServer5.ProcessingSoapClient();
+                server5.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server6 = new SoapServer6.ProcessingSoapClient();
+                server6.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server7 = new SoapServer7.ProcessingSoapClient();
+                server7.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+                //
+                server8 = new SoapServer8.ProcessingSoapClient();
+                server8.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
+            }
         }
 
         public async void Execute(AsyncCallType typi, params object[] obj)
@@ -70,7 +76,7 @@ namespace Api._QPR.abstracts
                     if (UserProperty.ComputerNumber == 1)//LOCAL TEST
                     {
                         serverLocalTest.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                        return;
+                        break;
                     }
 
                     resp1 = server1.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
@@ -95,7 +101,7 @@ namespace Api._QPR.abstracts
                     if (UserProperty.ComputerNumber == 1)//LOCAL TEST
                     {
                         serverLocalTest.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                        return;
+                        break;
                     }
                     resp1 = server1.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                     Thread.Sleep(1);
@@ -122,7 +128,7 @@ namespace Api._QPR.abstracts
                         SoapTest.ArrayOfString tst0 = new SoapTest.ArrayOfString();
                         tst0.AddRange(potos);
                         resp0 = serverLocalTest.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst0);
-                        return;
+                        break;
                     }
                     SoapServer1.ArrayOfString tst1 = new SoapServer1.ArrayOfString();
                     tst1.AddRange(potos);
@@ -171,7 +177,7 @@ namespace Api._QPR.abstracts
                     if (UserProperty.ComputerNumber == 1)//LOCAL TEST
                     {
                         _respLocalTest = serverLocalTest.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
-                        return;
+                        break;
                     }
 
                     _resp1 = server1.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));

@@ -40,7 +40,7 @@ namespace Muuzy.Class
             get { return "black.jpg"; }
         }
 
-        public static int ComputerNumber { get { return 1; } }
+        public static int ComputerNumber { get { return 8; } }
 
         public static string Current_User
         { get { return Path.Combine(Startup_Path, UserName); } }
