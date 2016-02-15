@@ -564,7 +564,7 @@ namespace QPS_Web1._CSHARP.Class
                                             int randi = random.Next(0, snc.Count);
                                             System.Drawing.Image img = SmartRotate(item, snc[randi]);
                                             snc.Clear();
-                                            Bitmap bt0 = new Bitmap(btm.Width, btm.Height);
+                                            Bitmap bt0 = new Bitmap(img.Width, img.Height);
                                             Graphics g = Graphics.FromImage(bt0);
                                             g.Clear(Color.FromArgb(item.GeneratedColorCode));
                                             if (opacity!=100)
