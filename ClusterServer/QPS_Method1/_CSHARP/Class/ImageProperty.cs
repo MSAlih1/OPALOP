@@ -257,6 +257,14 @@ namespace QPS_Web1._CSHARP.Class
                 if (_pixFor == PixFormat._null)
                     throw new Exception("Format null olamaz") { Source = "" };
 
+                //GC.Collect();
+                //Bitmap bmp;
+                //using (var ms = new MemoryStream(ImagePart))
+                //{
+                //    bmp = new Bitmap(ms);
+
+                //}
+
                 using (MagickImage imagem = new MagickImage(ImagePart))
                 {
                     imagem.Quality = 100;
