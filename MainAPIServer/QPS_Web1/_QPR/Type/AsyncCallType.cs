@@ -11,6 +11,7 @@ namespace Api._QPR.Type
         CreateXml = 1,
         DownloadInstaPhotos = 2,
         XmlUpdate = 3,
-        ImageGenerate = 4
+        ImageGenerate = 4,
+        SelectedInstagramPhotos=5
     }
 }

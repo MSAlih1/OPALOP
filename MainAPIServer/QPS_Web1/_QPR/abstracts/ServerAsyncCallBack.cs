@@ -52,7 +52,6 @@ namespace Api._QPR.abstracts
                 //
                 server4 = new SoapServer4.ProcessingSoapClient();
                 server4.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
-
                 //
                 server5 = new SoapServer5.ProcessingSoapClient();
                 server5.InnerChannel.OperationTimeout = TimeSpan.FromMinutes(90);
@@ -72,29 +71,36 @@ namespace Api._QPR.abstracts
         {
             switch (typi)
             {
+                case AsyncCallType.SelectedInstagramPhotos:
+                    if (UserProperty.ComputerNumber == 1)//LOCAL TEST
+                    {
+                        serverLocalTest.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(),obj[0].ToString());
+                        break;
+                    }
+                    //server1.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server2.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server3.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server4.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server5.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server6.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server7.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    //server8.SelectedInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), obj[0].ToString());
+                    break;
+
                 case AsyncCallType.CreateDir:
                     if (UserProperty.ComputerNumber == 1)//LOCAL TEST
                     {
                         serverLocalTest.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                         break;
                     }
-
-                    resp1 = server1.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp2 = server2.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp3 = server3.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp4 = server4.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp5 = server5.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp6 = server6.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp7 = server7.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp8 = server8.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
+                    server1.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server2.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server3.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server4.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server5.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server6.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server7.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server8.CreateDirAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                     break;
 
                 case AsyncCallType.CreateXml:
@@ -103,22 +109,14 @@ namespace Api._QPR.abstracts
                         serverLocalTest.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                         break;
                     }
-                    resp1 = server1.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp2 = server2.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp3 = server3.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp4 = server4.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp5 = server5.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp6 = server6.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp7 = server7.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
-                    resp8 = server8.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
-                    Thread.Sleep(1);
+                    server1.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server2.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server3.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server4.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server5.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server6.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server7.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
+                    server8.CreateXmlAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName());
                     break;
 
                 case AsyncCallType.DownloadInstaPhotos:
@@ -133,42 +131,34 @@ namespace Api._QPR.abstracts
                     SoapServer1.ArrayOfString tst1 = new SoapServer1.ArrayOfString();
                     tst1.AddRange(potos);
                     resp1 = server1.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst1);
-                    Thread.Sleep(1);
                     //
                     SoapServer2.ArrayOfString tst2 = new SoapServer2.ArrayOfString();
                     tst2.AddRange(potos);
                     resp2 = server2.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst2);
-                    Thread.Sleep(1);
                     //
                     SoapServer3.ArrayOfString tst3 = new SoapServer3.ArrayOfString();
                     tst3.AddRange(potos);
                     resp3 = server3.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst3);
-                    Thread.Sleep(1);
                     //
                     SoapServer4.ArrayOfString tst4 = new SoapServer4.ArrayOfString();
                     tst4.AddRange(potos);
                     resp4 = server4.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst4);
-                    Thread.Sleep(1);
                     //////
                     SoapServer5.ArrayOfString tst5 = new SoapServer5.ArrayOfString();
                     tst5.AddRange(potos);
                     resp5 = server5.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst5);
-                    Thread.Sleep(1);
                     //
                     SoapServer6.ArrayOfString tst6 = new SoapServer6.ArrayOfString();
                     tst6.AddRange(potos);
                     resp6 = server6.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst6);
-                    Thread.Sleep(1);
                     //
                     SoapServer7.ArrayOfString tst7 = new SoapServer7.ArrayOfString();
                     tst7.AddRange(potos);
                     resp7 = server7.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst7);
-                    Thread.Sleep(1);
                     //
                     SoapServer8.ArrayOfString tst8 = new SoapServer8.ArrayOfString();
                     tst8.AddRange(potos);
                     resp8 = server8.DownloadInstaPhotosAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), tst8);
-                    Thread.Sleep(1);
                     break;
 
                 case AsyncCallType.ImageGenerate:
@@ -179,30 +169,21 @@ namespace Api._QPR.abstracts
                         _respLocalTest = serverLocalTest.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                         break;
                     }
-
                     _resp1 = server1.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp2 = server2.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp3 = server3.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp4 = server4.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp5 = server5.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp6 = server6.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp7 = server7.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
                     icon++;
-                    Thread.Sleep(1);
                     _resp8 = server8.ImageGenerateAsync(ImageProperty.GetAccessCode(), ImageProperty.GetUserName(), Imgs[icon].Image.ToByteArray(), Imgs[icon].ImagePartInfo.X, Imgs[icon].ImagePartInfo.Y, Imgs[icon].ImagePartInfo.Width, Imgs[icon].ImagePartInfo.Height, int.Parse(obj[1].ToString()));
-                    Thread.Sleep(1);
                     break;
 
                 case AsyncCallType.XmlUpdate:

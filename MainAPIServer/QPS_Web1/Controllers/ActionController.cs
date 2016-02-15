@@ -533,6 +533,9 @@ namespace Api.Controllers
             {
                 string[] file = Directory.GetFiles(UserProperty.Current_User, UserProperty.UserXmlInfo);
                 string lst2 = HttpContext.Current.Request.Form[0];
+                ServerAsyncCallBack servers = new ServerAsyncCallBack();
+                
+                servers.Execute(Api._QPR.Type.AsyncCallType.SelectedInstagramPhotos, lst2);
 
                 JsonSerializerSettings serSettings = new JsonSerializerSettings();
                 serSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

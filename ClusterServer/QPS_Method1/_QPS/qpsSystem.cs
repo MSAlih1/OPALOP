@@ -19,6 +19,49 @@ namespace QPS_Web1._QPS.Class
         public static string GetAccessCode()
         { return "14E0057D-E497-47CE-BB0B-0D3096AC5D87"; }
 
+        public static void UpdateSelectedInstaPhotos(string UserName, string ls)
+        {
+            qprPath resources = new qprPath(UserName);
+            try
+            {
+                string[] file = Directory.GetFiles(resources.Current_User, resources.UserXmlInfo);
+
+                JsonSerializerSettings serSettings = new JsonSerializerSettings();
+                serSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                InstagramProfile.InstaPhoto[] outObject = JsonConvert.DeserializeObject<InstagramProfile.InstaPhoto[]>(ls, serSettings);
+
+                if (file.Count() != 1)
+                    throw new Exception("Geçersiz kullanıcı bilgileri");
+
+                XDocument doc = XDocument.Load(file[0]);
+                XElement root = doc.Elements("_" + UserName).First();
+                XElement InstagramP = root.Elements("InstagramPhotos").FirstOrDefault();
+                IEnumerable<XElement> photos = InstagramP.Elements("Photos");
+
+                if (outObject.Count() > 0)
+                {
+                    foreach (XElement photo in photos)
+                    {
+                        foreach (InstagramProfile.InstaPhoto selectedPhoto in outObject)
+                        {
+                            if (photo.Value == selectedPhoto.name)
+                            {
+                                XAttribute useths = photo.Attribute("useThis");
+                                useths.Value = selectedPhoto.UseThis.ToString();
+                                break;
+                            }
+                        }
+                    }
+                    doc.Save(file[0]);
+                }
+            }
+            catch (Exception ef)
+            {
+
+                throw ef;
+            }
+        }
+
         public static void CreateDir(string UserName)
         {
             try

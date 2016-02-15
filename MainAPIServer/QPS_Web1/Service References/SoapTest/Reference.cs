@@ -119,6 +119,13 @@ namespace Api.SoapTest {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/XmlUpdate", ReplyAction="*")]
         System.Threading.Tasks.Task<Api.SoapTest.XmlUpdateResponse> XmlUpdateAsync(Api.SoapTest.XmlUpdateRequest request);
+        
+        // CODEGEN: Generating message contract since element name AccessKey from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SelectedInstaPhotos", ReplyAction="*")]
+        Api.SoapTest.SelectedInstaPhotosResponse SelectedInstaPhotos(Api.SoapTest.SelectedInstaPhotosRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/SelectedInstaPhotos", ReplyAction="*")]
+        System.Threading.Tasks.Task<Api.SoapTest.SelectedInstaPhotosResponse> SelectedInstaPhotosAsync(Api.SoapTest.SelectedInstaPhotosRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -521,6 +528,82 @@ namespace Api.SoapTest {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SelectedInstaPhotosRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SelectedInstaPhotos", Namespace="http://tempuri.org/", Order=0)]
+        public Api.SoapTest.SelectedInstaPhotosRequestBody Body;
+        
+        public SelectedInstaPhotosRequest() {
+        }
+        
+        public SelectedInstaPhotosRequest(Api.SoapTest.SelectedInstaPhotosRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class SelectedInstaPhotosRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string AccessKey;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string UserName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string ls;
+        
+        public SelectedInstaPhotosRequestBody() {
+        }
+        
+        public SelectedInstaPhotosRequestBody(string AccessKey, string UserName, string ls) {
+            this.AccessKey = AccessKey;
+            this.UserName = UserName;
+            this.ls = ls;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SelectedInstaPhotosResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SelectedInstaPhotosResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Api.SoapTest.SelectedInstaPhotosResponseBody Body;
+        
+        public SelectedInstaPhotosResponse() {
+        }
+        
+        public SelectedInstaPhotosResponse(Api.SoapTest.SelectedInstaPhotosResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class SelectedInstaPhotosResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool SelectedInstaPhotosResult;
+        
+        public SelectedInstaPhotosResponseBody() {
+        }
+        
+        public SelectedInstaPhotosResponseBody(bool SelectedInstaPhotosResult) {
+            this.SelectedInstaPhotosResult = SelectedInstaPhotosResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface ProcessingSoapChannel : Api.SoapTest.ProcessingSoap, System.ServiceModel.IClientChannel {
     }
@@ -701,6 +784,35 @@ namespace Api.SoapTest {
             inValue.Body._Value = _Value;
             inValue.Body.ValueArtir = ValueArtir;
             return ((Api.SoapTest.ProcessingSoap)(this)).XmlUpdateAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Api.SoapTest.SelectedInstaPhotosResponse Api.SoapTest.ProcessingSoap.SelectedInstaPhotos(Api.SoapTest.SelectedInstaPhotosRequest request) {
+            return base.Channel.SelectedInstaPhotos(request);
+        }
+        
+        public bool SelectedInstaPhotos(string AccessKey, string UserName, string ls) {
+            Api.SoapTest.SelectedInstaPhotosRequest inValue = new Api.SoapTest.SelectedInstaPhotosRequest();
+            inValue.Body = new Api.SoapTest.SelectedInstaPhotosRequestBody();
+            inValue.Body.AccessKey = AccessKey;
+            inValue.Body.UserName = UserName;
+            inValue.Body.ls = ls;
+            Api.SoapTest.SelectedInstaPhotosResponse retVal = ((Api.SoapTest.ProcessingSoap)(this)).SelectedInstaPhotos(inValue);
+            return retVal.Body.SelectedInstaPhotosResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Api.SoapTest.SelectedInstaPhotosResponse> Api.SoapTest.ProcessingSoap.SelectedInstaPhotosAsync(Api.SoapTest.SelectedInstaPhotosRequest request) {
+            return base.Channel.SelectedInstaPhotosAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Api.SoapTest.SelectedInstaPhotosResponse> SelectedInstaPhotosAsync(string AccessKey, string UserName, string ls) {
+            Api.SoapTest.SelectedInstaPhotosRequest inValue = new Api.SoapTest.SelectedInstaPhotosRequest();
+            inValue.Body = new Api.SoapTest.SelectedInstaPhotosRequestBody();
+            inValue.Body.AccessKey = AccessKey;
+            inValue.Body.UserName = UserName;
+            inValue.Body.ls = ls;
+            return ((Api.SoapTest.ProcessingSoap)(this)).SelectedInstaPhotosAsync(inValue);
         }
     }
 }

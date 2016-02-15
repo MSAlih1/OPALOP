@@ -541,6 +541,9 @@
     <Content Include="Service References\SoapTest\Api.SoapTest.XmlUpdateResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\SoapTest\Api.SoapTest.SelectedInstaPhotosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SoapTest\Processing.disco" />
     <None Include="Service References\SoapTest\configuration91.svcinfo" />
     <None Include="Service References\SoapTest\configuration.svcinfo" />

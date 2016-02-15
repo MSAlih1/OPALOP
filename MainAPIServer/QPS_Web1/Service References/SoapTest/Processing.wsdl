@@ -98,6 +98,22 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="SelectedInstaPhotos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AccessKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ls" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SelectedInstaPhotosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SelectedInstaPhotosResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="CreateDirSoapIn">
@@ -130,6 +146,12 @@
   <wsdl:message name="XmlUpdateSoapOut">
     <wsdl:part name="parameters" element="tns:XmlUpdateResponse" />
   </wsdl:message>
+  <wsdl:message name="SelectedInstaPhotosSoapIn">
+    <wsdl:part name="parameters" element="tns:SelectedInstaPhotos" />
+  </wsdl:message>
+  <wsdl:message name="SelectedInstaPhotosSoapOut">
+    <wsdl:part name="parameters" element="tns:SelectedInstaPhotosResponse" />
+  </wsdl:message>
   <wsdl:portType name="ProcessingSoap">
     <wsdl:operation name="CreateDir">
       <wsdl:input message="tns:CreateDirSoapIn" />
@@ -150,6 +172,10 @@
     <wsdl:operation name="XmlUpdate">
       <wsdl:input message="tns:XmlUpdateSoapIn" />
       <wsdl:output message="tns:XmlUpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SelectedInstaPhotos">
+      <wsdl:input message="tns:SelectedInstaPhotosSoapIn" />
+      <wsdl:output message="tns:SelectedInstaPhotosSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ProcessingSoap" type="tns:ProcessingSoap">
@@ -199,6 +225,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SelectedInstaPhotos">
+      <soap:operation soapAction="http://tempuri.org/SelectedInstaPhotos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ProcessingSoap12" type="tns:ProcessingSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -240,6 +275,15 @@
     </wsdl:operation>
     <wsdl:operation name="XmlUpdate">
       <soap12:operation soapAction="http://tempuri.org/XmlUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SelectedInstaPhotos">
+      <soap12:operation soapAction="http://tempuri.org/SelectedInstaPhotos" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

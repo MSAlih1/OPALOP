@@ -74,5 +74,15 @@ namespace QPS_Method1
             }
             return false;
         }
+        [WebMethod]
+        public bool SelectedInstaPhotos(string AccessKey, string UserName, string ls)
+        {
+            if (AccessKey == qpsSystem.GetAccessCode())
+            {
+                qpsSystem.UpdateSelectedInstaPhotos(UserName, ls);
+                return true;
+            }
+            return false;
+        }
     }
 }
