@@ -262,7 +262,6 @@ namespace QPS_Web1._CSHARP.Class
                 //using (var ms = new MemoryStream(ImagePart))
                 //{
                 //    bmp = new Bitmap(ms);
-
                 //}
 
                 using (MagickImage imagem = new MagickImage(ImagePart))
@@ -271,7 +270,7 @@ namespace QPS_Web1._CSHARP.Class
                     imagem.Blur(5, 5);
 
                     List<ImgSquare> sp0 = new List<ImgSquare>();
-                    if (true)//!File.Exists(path)
+                    if (true)
                     {
                         int[,] pixavg = new int[5, 3];
                         int _pixformat = (int)_pixFor;

@@ -27,7 +27,7 @@ namespace QPS_Web1._QPS
 
                 using (MagickImage imagem = new MagickImage(inputBitmapPath))
                 {
-                    //############# ResizeImage #############
+                    //############# ResizeImage ############
                     int yuzde = 20;
                     imagem.Quality = 100;
                     int _w = imagem.Width + (imagem.Width / 100) * yuzde;
