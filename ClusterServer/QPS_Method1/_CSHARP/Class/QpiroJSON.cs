@@ -17,21 +17,7 @@ namespace QPS_Web1._CSHARP.Class
         }
 
         [JsonProperty("error")]
-        public object Error
-        {
-            get
-            {
-                if (this.Message == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    Data = null;
-                    return true;
-                }
-            }
-        }
+        public object Error { get { if (this.Message == null) { return false; } else { Data = null; return true; } } }
 
         [JsonProperty("message")]
         public object Message { get; set; }

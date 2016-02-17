@@ -1,13 +1,13 @@
-﻿using ImageMagick;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿//using ImageMagick;
+//using System;
+//using System.Collections.Generic;
+//using System.Drawing;
+//using System.IO;
+//using System.Linq;
+//using System.Web;
 
-namespace QPS_Method1._QPS
-{
+//namespace QPS_Method1._QPS
+//{
     //public class PartOfImage
     //{
     //    public Rectangle ImagePartInfo { get; set; }
@@ -43,4 +43,4 @@ namespace QPS_Method1._QPS
     //        ImagePartInfo = recti;
     //    }
     //}
-}
+//}

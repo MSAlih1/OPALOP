@@ -13,11 +13,7 @@ namespace QPS_Web1._QPS.Class
         public int IAvgRgb { get; set; }
         private Image myVar;
 
-        public Image IImage
-        {
-            get { return myVar; }
-            set { myVar = value; }
-        }
+        public Image IImage { get { return myVar; } set { myVar = value; } }
 
         public ImgSquare(Image _img)
         {
@@ -29,20 +25,7 @@ namespace QPS_Web1._QPS.Class
             isArea = false;
         }
 
-        public int GeneratedColorCode
-        {
-            get
-            {
-                if (isArea)
-                {
-                    return SAvgArb;
-                }
-                else
-                {
-                    return IAvgRgb;
-                }
-            }
-        }
+        public int GeneratedColorCode { get { if (isArea) { return SAvgArb; } else { return IAvgRgb; } } } 
 
         //120-360 r=>60<=g
         //120-240 g=>180<=b
