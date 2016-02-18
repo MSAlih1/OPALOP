@@ -546,6 +546,40 @@ namespace QPS_Web1._CSHARP.Class
                                     }
                                     else
                                     {
+
+                                        //cont = 0;
+                                        //qpiro_number2 += (332101 * 5);
+                                        //do
+                                        //{
+                                        //    snc = spl4.Where(p =>
+                                        //        (p.GeneratedColorCode - (qpiro_number + qpiro_number2) < item.GeneratedColorCode &&
+                                        //        p.GeneratedColorCode + (qpiro_number + qpiro_number2) > item.GeneratedColorCode) &&
+                                        //        p.isArea == false).ToList();
+                                        //    qpiro_number2 += 332101;
+                                        //    cont++;
+                                        //}
+                                        //while (snc.Count == 0 && cont < 5);
+
+                                        //if (snc.Count > 0)
+                                        //{
+                                        //    int randi = random.Next(0, snc.Count);
+                                        //    System.Drawing.Image img = SmartRotate(item, snc[randi]);
+                                        //    snc.Clear();
+                                        //    Bitmap bt0 = new Bitmap(btm.Width, btm.Height);
+                                        //    Graphics g = Graphics.FromImage(bt0);
+                                        //    g.Clear(Color.Red);
+                                        //    img = Transparnt(img, 70);
+                                        //    g.DrawImage(img, Point.Empty);
+                                        //    g.Dispose();
+                                        //    //img = Transparnt(img, opacity);
+                                        //    gr1.DrawImage(bt0, rec);
+
+                                        //    sp0.RemoveAt(i);
+                                        //    i--;
+                                        //    img.Dispose();
+                                        //}
+                                       
+
                                         using (MagickImage imgUndefined = new MagickImage(Path.Combine(resources.Data_InstagramPhotos, "black.jpg")))
                                         {
                                             System.Drawing.Image img = Transparnt(imgUndefined.ToBitmap(), opacity);
