@@ -564,14 +564,14 @@ namespace QPS_Web1._CSHARP.Class
                                             int randi = random.Next(0, snc.Count);
                                             System.Drawing.Image img = SmartRotate(item, snc[randi]);
                                             snc.Clear();
-                                            Bitmap bt0 = new Bitmap(img.Width, img.Height);
+                                            Bitmap bt0 = new Bitmap(rec.Width, rec.Height);
                                             Graphics g = Graphics.FromImage(bt0);
                                             g.Clear(Color.FromArgb(item.GeneratedColorCode));
-                                            if (opacity!=100)
+                                            if (opacity != 100)
                                             {
                                                 img = Transparnt(img, opacity + 20);
                                             }
-                                            g.DrawImage(img, Point.Empty);
+                                            g.DrawImage(img, new Rectangle(0, 0, rec.Width, rec.Height));
                                             g.Dispose();
                                             //img = Transparnt(img, opacity);
                                             gr1.DrawImage(bt0, rec);
