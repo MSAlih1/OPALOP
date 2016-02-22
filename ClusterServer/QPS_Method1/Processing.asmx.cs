@@ -65,21 +65,22 @@ namespace QPS_Method1
         }
 
         [WebMethod]
-        public bool XmlUpdate(string AccessKey, string UserName, string key, int _Value, bool ValueArtir)
-        {
-            if (AccessKey == qpsSystem.GetAccessCode())
-            {
-                qpsSystem.XmlUpdate(UserName, key, _Value, ValueArtir);
-                return true;
-            }
-            return false;
-        }
-        [WebMethod]
         public bool SelectedInstaPhotos(string AccessKey, string UserName, string ls)
         {
             if (AccessKey == qpsSystem.GetAccessCode())
             {
                 qpsSystem.UpdateSelectedInstaPhotos(UserName, ls);
+                return true;
+            }
+            return false;
+        }
+
+        [WebMethod]
+        public bool XmlUpdate(string AccessKey, string UserName, string key, int _Value, bool ValueArtir)
+        {
+            if (AccessKey == qpsSystem.GetAccessCode())
+            {
+                qpsSystem.XmlUpdate(UserName, key, _Value, ValueArtir);
                 return true;
             }
             return false;

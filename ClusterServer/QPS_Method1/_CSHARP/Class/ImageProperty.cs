@@ -450,15 +450,12 @@ namespace QPS_Web1._CSHARP.Class
                             opacity = 50;
                             break;
                     }
-                    //string MiniPicturePath = Path.Combine(UserProperty.Data_Path, PixFormat._94x94.ToString());  //eski yükleme şekli
                     string MiniPicturePath = Path.Combine(resources.Data_InstagramPhotos);
                     if (Directory.Exists(MiniPicturePath))
                     {
                         Bitmap btm = imagem.ToBitmap();
                         using (Graphics gr1 = Graphics.FromImage(btm))
                         {
-                            //string[] list = Directory.GetFiles(MiniPicturePath, "*" + JPG);
-                            //string[] list = new string[0];
                             ///////////////////////////////////////////////////////////////
                             string[] file = Directory.GetFiles(resources.Current_User, resources.UserXmlInfo);
 
@@ -483,15 +480,6 @@ namespace QPS_Web1._CSHARP.Class
                                         mini.Quality = 100;
                                         if (mini.Width != 94 && mini.Height != 94)
                                             mini.Resize((int)_pixFor, (int)_pixFor);
-
-                                        //ImgSquare imgsq = new ImgSquare(mini.ToBitmap(), new List<QuardPixAvg>() {
-                                        //    new QuardPixAvg(Color.FromArgb(int.Parse(photos[i].Attribute("SolUst").Value)),QuardBolum.SagAlt),
-                                        //    new QuardPixAvg(Color.FromArgb(int.Parse(photos[i].Attribute("SagUst").Value)),QuardBolum.SagAlt),
-                                        //    new QuardPixAvg(Color.FromArgb(int.Parse(photos[i].Attribute("SolAlt").Value)),QuardBolum.SagAlt),
-                                        //    new QuardPixAvg(Color.FromArgb(int.Parse(photos[i].Attribute("SagAlt").Value)),QuardBolum.SagAlt),
-                                        //    new QuardPixAvg(Color.FromArgb(int.Parse(photos[i].Attribute("TotalAvg").Value)),QuardBolum.SagAlt)
-                                        //});
-
                                         spl2.Add(new ImgSquare(mini.ToBitmap()));
 
                                         mini.Dispose();
@@ -573,54 +561,12 @@ namespace QPS_Web1._CSHARP.Class
                                             }
                                             g.DrawImage(img, new Rectangle(0, 0, rec.Width, rec.Height));
                                             g.Dispose();
-                                            //img = Transparnt(img, opacity);
                                             gr1.DrawImage(bt0, rec);
 
                                             sp0.RemoveAt(i);
                                             i--;
                                             img.Dispose();
                                         }
-
-
-                                        //using (MagickImage imgUndefined = new MagickImage(Path.Combine(resources.Data_InstagramPhotos, "black.jpg")))
-                                        //{
-                                        //    System.Drawing.Image img = Transparnt(imgUndefined.ToBitmap(), opacity);
-                                        //    gr1.DrawImage(img, rec);
-                                        //    sp0.RemoveAt(i);
-                                        //    i--;
-                                        //    imgUndefined.Dispose();
-                                        //}
-                                        ////int ss = item.GeneratedColorCode;
-                                        ////if (ss >= 11075440 && ss <= 15260100)
-                                        ////{
-                                        ////    cont = 0;
-                                        //// qpiro_number2 += 332101;
-                                        ////    do
-                                        ////    {
-                                        ////        snc = spl4.Where(p =>
-                                        ////            (p.GeneratedColorCode - (qpiro_number + qpiro_number2) < item.GeneratedColorCode &&
-                                        ////            p.GeneratedColorCode + (qpiro_number + qpiro_number2) > item.GeneratedColorCode) &&
-                                        ////            p.isArea == false).ToList();
-                                        ////        qpiro_number2 += 332101;
-                                        ////        cont++;
-                                        ////    }
-                                        ////    while (snc.Count == 0 && cont < 13);
-
-                                        ////    if (snc.Count != 0)
-                                        ////    {
-                                        ////        Rectangle rec = new Rectangle(item.W, item.H, (int)_pixFor, (int)_pixFor);
-                                        ////        int randi = random.Next(0, snc.Count);
-                                        ////        System.Drawing.Image img = SmartRotate(item, snc[randi]);
-                                        ////        snc.Clear();//
-                                        ////        img = Transparnt(img, opacity);
-                                        ////        gr1.DrawImage(img, rec);
-                                        ////        sp0.RemoveAt(i);
-                                        ////        i--;
-                                        ////    }
-                                        ////    else
-                                        ////    {
-                                        ////    }
-                                        ////}
                                         undefined++;
                                     }
                                 }
@@ -632,13 +578,6 @@ namespace QPS_Web1._CSHARP.Class
                             sp0.Clear();
                             spl4.Clear();
                             gr1.Dispose();
-                            ////workingBitmap1.Save(Path.Combine(UsrImageProc.SavedPhotos_Path, Path.GetFileName(inputBitmapPath)));
-                            ////imglist.Add("lokale kaydettim");
-                            //Bitmap hd = btm.ArithmeticBlend(btm, ColorCalculationType.Add);
-                            //imglist.Add(ImageToBase64(hd, System.Drawing.Imaging.ImageFormat.Jpeg));
-                            //imglist.Add(ImageToBase64(btm, System.Drawing.Imaging.ImageFormat.Jpeg));
-                            //btm.Dispose();
-                            //hd.Dispose();
                             imagem.Dispose();
                             return new NewImagePart() { newImage = new MagickImage(btm).ToByteArray(), ImagePartInfo = recti.ToString() };
                         }
