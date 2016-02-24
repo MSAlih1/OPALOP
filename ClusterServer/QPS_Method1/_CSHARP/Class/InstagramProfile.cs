@@ -90,18 +90,6 @@ namespace QPS_Web1._QPS.Class
         public static List<QuardPixAvg> SaveUserPhoto(string UserName, string item)
         {
             qprPath resources = new qprPath(UserName);
-            //string filename = Path.GetFileName(item);
-            //string fileSavePath = Path.Combine(resources.Data_InstagramPhotos, filename);
-            //if (!File.Exists(fileSavePath))
-            //{
-            //    Bitmap downl = DownloadImage(item);
-            //    Bitmap btm = (Bitmap)ImageProperty.resizeImage2(downl.Clone() as Image, new Size(94, 94));
-            //    downl.Dispose();
-            //    btm.Save(fileSavePath, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //    List<QuardPixAvg> quard = ImageProperty.Quard(btm);
-            //    btm.Dispose();
-            //    return quard;
-            //}
             return new List<QuardPixAvg>();
         }
 
