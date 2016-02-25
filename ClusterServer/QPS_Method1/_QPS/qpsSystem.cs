@@ -312,7 +312,6 @@ namespace QPS_Web1._QPS.Class
                     {
                         if (i >= min && i <= max)
                         {
-                            //resp.Data.Add(imglist[i]);
                             string filname = Path.GetFileName(imglist[i]);
                             if (potos.FindIndex(p => Path.GetFileName(p.Value) == filname) == -1)
                             {
