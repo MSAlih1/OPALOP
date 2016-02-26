@@ -110,7 +110,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_CSHARP\Class\Filters.cs" />
     <Compile Include="_CSHARP\Class\ImageProperty.cs" />
     <Compile Include="_CSHARP\Class\InstagramProfile.cs" />
     <Compile Include="_CSHARP\Class\QpiroJSON.cs" />
