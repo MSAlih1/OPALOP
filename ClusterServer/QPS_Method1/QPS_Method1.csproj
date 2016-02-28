@@ -119,7 +119,6 @@
     <Compile Include="_QPS\Class\QuardPixAvg.cs" />
     <Compile Include="_QPS\Class\SquarePoint.cs" />
     <Compile Include="_QPS\newImagePart.cs" />
-    <Compile Include="_QPS\PartOfImage.cs" />
     <Compile Include="_QPS\qprPath.cs" />
     <Compile Include="_QPS\qpsGenerator.cs" />
     <Compile Include="_QPS\qpsSystem.cs" />
