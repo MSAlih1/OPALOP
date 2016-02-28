@@ -120,7 +120,6 @@
     <Compile Include="_QPS\Class\SquarePoint.cs" />
     <Compile Include="_QPS\newImagePart.cs" />
     <Compile Include="_QPS\qprPath.cs" />
-    <Compile Include="_QPS\qpsGenerator.cs" />
     <Compile Include="_QPS\qpsSystem.cs" />
     <Compile Include="_QPS\Type\ColorCalculationType.cs" />
     <Compile Include="_QPS\Type\ImgType.cs" />
