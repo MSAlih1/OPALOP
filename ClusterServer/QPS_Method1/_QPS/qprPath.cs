@@ -26,17 +26,7 @@ namespace QPS_Web1._QPS
         {
             get
             {
-                //Client cn = UserProperty.ConnectAuth();
-                //UserProfile up = cn.GetUser(ClaimsPrincipal.Current.Identity.Name);
-                //string isValid = up.ExtraProperties["email_verified"].ToString();
-                //if (isValid == "True")
-                //{
-                //    return true;
-                //}
-                //else
-                //{
                 return true;
-                //}
             }
         }
 
