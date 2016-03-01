@@ -501,8 +501,6 @@ namespace QPS_Web1._CSHARP.Class
                             for (int i = 0; i < sp0.Count; i++)
                             {
                                 ImgSquare item = sp0[i];
-                                //if (item.SAvgArb == 0 && item.IAvgRgb == 0)
-                                //    continue;
                                 try
                                 {
                                     qpiro_number2 = 0;
