@@ -5,6 +5,7 @@ using QPS_Web1._QPS.Type;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -21,6 +22,25 @@ namespace QPS_Method1
     // [System.Web.Script.Services.ScriptService]
     public class Processing : System.Web.Services.WebService
     {
+        [WebMethod]
+        public bool DeleteUser(string AccessKey, string UserName)
+        {
+            if (AccessKey == qpsSystem.GetAccessCode())
+            {
+                try
+                {
+                    qprPath resources = new qprPath(UserName);
+                    Directory.Delete(resources.Current_User, true);
+                }
+                catch (Exception)
+                {
+
+                }
+                return true;
+            }
+            return false;
+        }
+
         [WebMethod]
         public bool CreateDir(string AccessKey, string UserName)
         {
